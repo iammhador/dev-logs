@@ -1,5 +1,3 @@
-"````markdown
-
 # 📚 Dev Logs
 
 Welcome to **Dev Logs**, an open-source learning repository — a structured, version-controlled journey into mastering full-stack and foundational development topics, one branch at a time.
@@ -147,5 +145,5 @@ Want to follow along or collaborate? Reach out to me on:
 ---
 
 > “Knowledge grows like a tree — each branch makes you stronger.” 🌱
-"
+
 ```
