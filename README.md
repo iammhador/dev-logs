@@ -1,7 +1,3 @@
-Absolutely! Here's a complete and professional `README.md` for your GitHub repo named **`branch-out-learning`**. This file includes a **vision**, **structure**, **how to use the repo**, and a **learning roadmap**, making it suitable for both personal use and sharing with others (e.g. recruiters or peers).
-
----
-
 ````markdown
 # 🌿 branch-out-learning
 
@@ -129,7 +125,3 @@ Want to follow along or collaborate? Reach out to me on:
 ---
 
 > “Knowledge grows like a tree — each branch makes you stronger.” 🌱
-
-```
-
-```
