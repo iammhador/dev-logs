@@ -25,6 +25,7 @@
 ## 🖥️ Basic Linux Commands
 
 ### Navigation & File System
+
 ```bash
 # Directory navigation
 pwd                     # Show current directory
@@ -56,6 +57,7 @@ locate filename         # Find file by name (fast)
 ```
 
 ### Permissions & Ownership
+
 ```bash
 # View permissions
 ls -l file              # Show file permissions
@@ -79,6 +81,7 @@ sudo chown -R user:group /dir  # Recursive ownership change
 ## 📁 File Operations
 
 ### Text Processing
+
 ```bash
 # Text manipulation
 cut -d':' -f1 /etc/passwd     # Extract first field
@@ -100,6 +103,7 @@ unzip archive.zip             # Extract zip
 ```
 
 ### File Transfer
+
 ```bash
 # Local transfer
 cp -r source/ dest/           # Copy directory
@@ -120,6 +124,7 @@ curl -O https://example.com/file # Download with curl
 ## 🖥️ System Information
 
 ### Hardware & System
+
 ```bash
 # System info
 uname -a                # System information
@@ -142,6 +147,7 @@ du -sh /path            # Directory size
 ```
 
 ### Performance Monitoring
+
 ```bash
 # Process monitoring
 top                     # Real-time processes
@@ -161,6 +167,7 @@ sar -u 1 10             # CPU usage over time
 ## ⚙️ Process Management
 
 ### Process Control
+
 ```bash
 # Start/stop processes
 nohup command &         # Run in background
@@ -181,6 +188,7 @@ renice 10 PID           # Change process priority
 ```
 
 ### Service Management
+
 ```bash
 # Systemd services
 sudo systemctl start service    # Start service
@@ -197,6 +205,7 @@ sudo systemctl list-units       # List all services
 ## 🌐 Network Interface Management
 
 ### Interface Information
+
 ```bash
 # Modern commands (ip)
 ip addr show            # Show all interfaces
@@ -212,6 +221,7 @@ ifconfig -a             # Show all interfaces (including down)
 ```
 
 ### Interface Configuration
+
 ```bash
 # Bring interface up/down
 sudo ip link set eth0 up
@@ -236,6 +246,7 @@ sudo ip route add default via 192.168.1.1
 ## 🏓 Connectivity Testing
 
 ### Basic Connectivity
+
 ```bash
 # Ping tests
 ping google.com         # Basic connectivity test
@@ -253,6 +264,7 @@ mtr google.com          # Real-time traceroute
 ```
 
 ### Port Testing
+
 ```bash
 # Test port connectivity
 telnet google.com 80    # Test TCP port
@@ -271,6 +283,7 @@ wget --spider google.com        # Test without downloading
 ## 🔍 DNS Operations
 
 ### DNS Queries
+
 ```bash
 # Basic DNS lookup
 nslookup google.com     # Basic DNS query
@@ -292,6 +305,7 @@ nslookup 8.8.8.8        # Reverse lookup
 ```
 
 ### Advanced DNS
+
 ```bash
 # DNS tracing
 dig +trace google.com   # Trace DNS resolution
@@ -312,6 +326,7 @@ systemd-resolve --status # Show DNS status
 ## 📊 Network Monitoring
 
 ### Connection Monitoring
+
 ```bash
 # Active connections
 netstat -tulpn          # All listening ports with processes
@@ -327,6 +342,7 @@ ss -s                   # Socket statistics
 ```
 
 ### Traffic Analysis
+
 ```bash
 # Real-time monitoring
 iftop                   # Real-time bandwidth usage
@@ -347,6 +363,7 @@ tcpdump -r capture.pcap # Read from file
 ## 🛡️ Firewall Management
 
 ### iptables
+
 ```bash
 # View rules
 sudo iptables -L        # List all rules
@@ -369,6 +386,7 @@ sudo iptables-restore < rules.txt
 ```
 
 ### ufw (Ubuntu Firewall)
+
 ```bash
 # Basic operations
 sudo ufw enable         # Enable firewall
@@ -394,6 +412,7 @@ sudo ufw --force reset  # Reset all rules
 ## 🔬 Advanced Network Tools
 
 ### Network Scanning (nmap)
+
 ```bash
 # Host discovery
 nmap -sn 192.168.1.0/24 # Ping scan
@@ -414,6 +433,7 @@ nmap --script vuln 192.168.1.1 # Vulnerability scan
 ```
 
 ### Packet Analysis
+
 ```bash
 # tcpdump filters
 sudo tcpdump -i eth0 'tcp port 80' # HTTP traffic
@@ -434,6 +454,7 @@ tshark -T fields -e ip.src -e ip.dst # Extract fields
 ## 📈 Performance Testing
 
 ### Bandwidth Testing
+
 ```bash
 # iperf3 (requires server)
 iperf3 -s               # Server mode
@@ -448,6 +469,7 @@ wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test100.zip
 ```
 
 ### Latency Testing
+
 ```bash
 # Continuous monitoring
 ping -i 0.2 google.com  # High frequency ping
@@ -462,6 +484,7 @@ ping -c 100 google.com | grep 'time=' | awk -F'time=' '{print $2}' | awk -F' ' '
 ## 🔒 Security & Scanning
 
 ### Security Scanning
+
 ```bash
 # Port scanning
 nmap -sS -O target      # Stealth scan with OS detection
@@ -480,6 +503,7 @@ curl -I https://target  # Check headers
 ```
 
 ### Network Security
+
 ```bash
 # Monitor connections
 ss -tulpn | grep LISTEN # Listening services
@@ -498,6 +522,7 @@ journalctl -f           # System logs
 ## 🔧 Troubleshooting Workflows
 
 ### Network Connectivity Issues
+
 ```bash
 # Step 1: Check local interface
 ip addr show
@@ -520,6 +545,7 @@ nc -zv target 80
 ```
 
 ### DNS Issues
+
 ```bash
 # Check DNS configuration
 cat /etc/resolv.conf
@@ -538,6 +564,7 @@ dig +trace domain.com
 ```
 
 ### Performance Issues
+
 ```bash
 # Check bandwidth
 iperf3 -c speedtest.server.com
@@ -560,6 +587,7 @@ cat /proc/net/dev
 ## 🔌 Common Network Ports
 
 ### Well-Known Ports
+
 ```
 20/21   FTP (File Transfer Protocol)
 22      SSH (Secure Shell)
@@ -576,6 +604,7 @@ cat /proc/net/dev
 ```
 
 ### Application Ports
+
 ```
 3306    MySQL
 5432    PostgreSQL
@@ -594,6 +623,7 @@ cat /proc/net/dev
 ## 🌐 IP Address Ranges
 
 ### Private IP Ranges (RFC 1918)
+
 ```
 10.0.0.0/8        (10.0.0.0 - 10.255.255.255)
 172.16.0.0/12     (172.16.0.0 - 172.31.255.255)
@@ -601,6 +631,7 @@ cat /proc/net/dev
 ```
 
 ### Special IP Addresses
+
 ```
 127.0.0.0/8      Loopback (localhost)
 169.254.0.0/16   Link-local (APIPA)
@@ -610,6 +641,7 @@ cat /proc/net/dev
 ```
 
 ### Subnet Masks (CIDR)
+
 ```
 /8  = 255.0.0.0       (16,777,214 hosts)
 /16 = 255.255.0.0     (65,534 hosts)
@@ -627,6 +659,7 @@ cat /proc/net/dev
 ## 🎯 Quick Reference Scripts
 
 ### Network Health Check
+
 ```bash
 #!/bin/bash
 # Quick network health check
@@ -644,17 +677,19 @@ nslookup google.com > /dev/null && echo "✅ DNS OK" || echo "❌ DNS FAIL"
 ```
 
 ### Port Scanner
+
 ```bash
 #!/bin/bash
 # Simple port scanner
 HOST="$1"
 for PORT in 22 23 25 53 80 110 143 443 993 995; do
-    timeout 1 bash -c "</dev/tcp/$HOST/$PORT" 2>/dev/null && 
+    timeout 1 bash -c "</dev/tcp/$HOST/$PORT" 2>/dev/null &&
     echo "Port $PORT: Open" || echo "Port $PORT: Closed"
 done
 ```
 
 ### Bandwidth Monitor
+
 ```bash
 #!/bin/bash
 # Simple bandwidth monitor
@@ -665,10 +700,10 @@ while true; do
     sleep 1
     RX2=$(cat /sys/class/net/$INTERFACE/statistics/rx_bytes)
     TX2=$(cat /sys/class/net/$INTERFACE/statistics/tx_bytes)
-    
+
     RX_RATE=$(((RX2-RX1)/1024))
     TX_RATE=$(((TX2-TX1)/1024))
-    
+
     echo "$(date): RX: ${RX_RATE} KB/s, TX: ${TX_RATE} KB/s"
 done
 ```
@@ -678,6 +713,7 @@ done
 ## 💡 Pro Tips
 
 ### Command Aliases
+
 ```bash
 # Add to ~/.bashrc or ~/.zshrc
 alias ll='ls -la'
@@ -691,6 +727,7 @@ alias netcheck='ping -c 4 8.8.8.8 && nslookup google.com'
 ```
 
 ### Useful One-liners
+
 ```bash
 # Find your public IP
 curl -s ifconfig.me
@@ -728,7 +765,3 @@ watch -n 1 'cat /proc/net/dev'
 > **🎓 Congratulations!** You now have a comprehensive reference for Linux and networking commands. Bookmark this page and refer to it whenever you need quick command syntax or troubleshooting workflows. Practice these commands regularly to build muscle memory and become a networking power user! 🚀
 
 **Remember**: Always test commands in a safe environment first, especially those that modify system configuration. When in doubt, check the man pages (`man command`) for detailed documentation.
-
----
-
-*Last updated: December 2023 | Version 1.0*
