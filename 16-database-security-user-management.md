@@ -9,6 +9,7 @@ Database security is critical for protecting sensitive data and ensuring complia
 ## 🎯 Learning Objectives
 
 By the end of this chapter, you will:
+
 - Understand database security fundamentals
 - Create and manage database users and roles
 - Implement proper access control and permissions
@@ -25,11 +26,13 @@ By the end of this chapter, you will:
 ### Database Security Fundamentals
 
 **The CIA Triad:**
+
 - **Confidentiality**: Data is accessible only to authorized users
 - **Integrity**: Data remains accurate and unmodified
 - **Availability**: Data is accessible when needed
 
 **Security Layers:**
+
 1. **Network Security**: Firewalls, VPNs, network segmentation
 2. **Authentication**: Verifying user identity
 3. **Authorization**: Controlling what users can do
@@ -40,6 +43,7 @@ By the end of this chapter, you will:
 ### Authentication vs Authorization
 
 **Authentication** ("Who are you?"):
+
 - Password-based authentication
 - Certificate-based authentication
 - Multi-factor authentication (MFA)
@@ -47,6 +51,7 @@ By the end of this chapter, you will:
 - OAuth/SAML integration
 
 **Authorization** ("What can you do?"):
+
 - Role-based access control (RBAC)
 - Attribute-based access control (ABAC)
 - Principle of least privilege
@@ -65,17 +70,17 @@ CREATE USER 'readonly_user'@'%' IDENTIFIED BY 'ReadOnlyPass456!';
 CREATE USER 'admin_user'@'10.0.0.%' IDENTIFIED BY 'AdminPass789!';
 
 -- Create user with SSL requirement
-CREATE USER 'secure_user'@'%' 
-IDENTIFIED BY 'SecurePass123!' 
+CREATE USER 'secure_user'@'%'
+IDENTIFIED BY 'SecurePass123!'
 REQUIRE SSL;
 
 -- Create user with certificate authentication
-CREATE USER 'cert_user'@'%' 
-IDENTIFIED BY 'CertPass123!' 
+CREATE USER 'cert_user'@'%'
+IDENTIFIED BY 'CertPass123!'
 REQUIRE X509;
 
 -- View users
-SELECT User, Host, ssl_type, ssl_cipher, x509_issuer, x509_subject 
+SELECT User, Host, ssl_type, ssl_cipher, x509_issuer, x509_subject
 FROM mysql.user;
 
 -- Modify user password
@@ -128,13 +133,13 @@ CREATE USER readonly_user WITH PASSWORD 'ReadOnlyPass456!';
 CREATE ROLE admin_user WITH LOGIN PASSWORD 'AdminPass789!';
 
 -- Create user with connection limits
-CREATE USER limited_user WITH 
-  PASSWORD 'LimitedPass123!' 
+CREATE USER limited_user WITH
+  PASSWORD 'LimitedPass123!'
   CONNECTION LIMIT 5;
 
 -- Create user with expiration
-CREATE USER temp_user WITH 
-  PASSWORD 'TempPass123!' 
+CREATE USER temp_user WITH
+  PASSWORD 'TempPass123!'
   VALID UNTIL '2024-12-31';
 
 -- Create role without login (for grouping permissions)
@@ -148,15 +153,15 @@ GRANT app_writers TO app_user;
 GRANT app_admins TO admin_user;
 
 -- Create role with inheritance
-CREATE ROLE manager WITH 
-  LOGIN 
-  PASSWORD 'ManagerPass123!' 
+CREATE ROLE manager WITH
+  LOGIN
+  PASSWORD 'ManagerPass123!'
   INHERIT; -- Can use privileges of granted roles automatically
 
 -- Create role without inheritance
-CREATE ROLE auditor WITH 
-  LOGIN 
-  PASSWORD 'AuditorPass123!' 
+CREATE ROLE auditor WITH
+  LOGIN
+  PASSWORD 'AuditorPass123!'
   NOINHERIT; -- Must explicitly SET ROLE to use granted privileges
 
 -- Modify user attributes
@@ -171,7 +176,7 @@ ALTER USER suspicious_user WITH LOGIN;
 -- View users and roles
 \du
 -- or
-SELECT rolname, rolsuper, rolinherit, rolcreaterole, rolcreatedb, 
+SELECT rolname, rolsuper, rolinherit, rolcreaterole, rolcreatedb,
        rolcanlogin, rolconnlimit, rolvaliduntil
 FROM pg_roles;
 
@@ -206,10 +211,10 @@ GRANT SELECT, INSERT, UPDATE ON ecommerce.customers TO 'customer_service'@'%';
 GRANT SELECT ON ecommerce.orders TO 'reporting_user'@'%';
 
 -- Column-level privileges
-GRANT SELECT (customer_id, first_name, last_name, email) 
+GRANT SELECT (customer_id, first_name, last_name, email)
 ON ecommerce.customers TO 'limited_user'@'%';
 
-GRANT UPDATE (status, updated_at) 
+GRANT UPDATE (status, updated_at)
 ON ecommerce.orders TO 'order_processor'@'%';
 
 -- Stored procedure privileges
@@ -232,7 +237,7 @@ SHOW GRANTS FOR 'app_user'@'localhost';
 SHOW GRANTS FOR CURRENT_USER();
 
 -- View all user privileges
-SELECT 
+SELECT
     GRANTEE,
     TABLE_SCHEMA,
     TABLE_NAME,
@@ -263,7 +268,7 @@ GRANT SELECT ON ecommerce.order_items TO 'ecommerce_inventory_manager';
 GRANT SELECT ON ecommerce.orders TO 'ecommerce_financial_analyst';
 GRANT SELECT ON ecommerce.payments TO 'ecommerce_financial_analyst';
 GRANT SELECT ON ecommerce.refunds TO 'ecommerce_financial_analyst';
-GRANT SELECT (customer_id, total_spent, registration_date) 
+GRANT SELECT (customer_id, total_spent, registration_date)
 ON ecommerce.customers TO 'ecommerce_financial_analyst';
 
 -- Assign roles to users
@@ -291,27 +296,27 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO app_user;
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO readonly_user;
 
 -- Grant on future tables
-ALTER DEFAULT PRIVILEGES IN SCHEMA public 
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO app_user;
 
-ALTER DEFAULT PRIVILEGES IN SCHEMA public 
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
 GRANT SELECT ON TABLES TO readonly_user;
 
 -- Sequence privileges (for auto-increment)
 GRANT USAGE ON ALL SEQUENCES IN SCHEMA public TO app_user;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public 
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
 GRANT USAGE ON SEQUENCES TO app_user;
 
 -- Function/procedure privileges
 GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO app_user;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public 
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
 GRANT EXECUTE ON FUNCTIONS TO app_user;
 
 -- Column-level privileges
-GRANT SELECT (customer_id, first_name, last_name, email) 
+GRANT SELECT (customer_id, first_name, last_name, email)
 ON customers TO limited_user;
 
-GRANT UPDATE (status, updated_at) 
+GRANT UPDATE (status, updated_at)
 ON orders TO order_processor;
 
 -- Row-level security (RLS)
@@ -336,7 +341,7 @@ REVOKE ALL PRIVILEGES ON DATABASE ecommerce FROM old_user;
 -- View privileges
 \dp customers
 -- or
-SELECT 
+SELECT
     grantee,
     table_schema,
     table_name,
@@ -407,18 +412,18 @@ SELECT @@have_ssl;
 SHOW STATUS LIKE 'Ssl%';
 
 -- Create user requiring SSL
-CREATE USER 'ssl_user'@'%' 
-IDENTIFIED BY 'SecurePass123!' 
+CREATE USER 'ssl_user'@'%'
+IDENTIFIED BY 'SecurePass123!'
 REQUIRE SSL;
 
 -- Create user requiring specific SSL certificate
-CREATE USER 'cert_user'@'%' 
-IDENTIFIED BY 'CertPass123!' 
+CREATE USER 'cert_user'@'%'
+IDENTIFIED BY 'CertPass123!'
 REQUIRE X509;
 
 -- Create user requiring specific certificate attributes
-CREATE USER 'specific_cert_user'@'%' 
-IDENTIFIED BY 'SpecificCertPass123!' 
+CREATE USER 'specific_cert_user'@'%'
+IDENTIFIED BY 'SpecificCertPass123!'
 REQUIRE ISSUER '/C=US/ST=CA/L=San Francisco/O=MyCompany/CN=MyCA'
 AND SUBJECT '/C=US/ST=CA/L=San Francisco/O=MyCompany/CN=client';
 
@@ -427,8 +432,8 @@ ALTER USER 'existing_user'@'%' REQUIRE SSL;
 ALTER USER 'existing_user'@'%' REQUIRE NONE; -- Remove SSL requirement
 
 -- Check user SSL requirements
-SELECT User, Host, ssl_type, ssl_cipher, x509_issuer, x509_subject 
-FROM mysql.user 
+SELECT User, Host, ssl_type, ssl_cipher, x509_issuer, x509_subject
+FROM mysql.user
 WHERE User = 'ssl_user';
 
 -- Connect with SSL (command line)
@@ -444,7 +449,7 @@ SHOW ssl;
 SELECT * FROM pg_stat_ssl WHERE pid = pg_backend_pid();
 
 -- View SSL connection info
-SELECT 
+SELECT
     pid,
     usename,
     application_name,
@@ -452,7 +457,7 @@ SELECT
     ssl,
     ssl_version,
     ssl_cipher
-FROM pg_stat_ssl 
+FROM pg_stat_ssl
 JOIN pg_stat_activity USING (pid)
 WHERE ssl = true;
 
@@ -538,7 +543,7 @@ AFTER INSERT ON customers
 FOR EACH ROW
 BEGIN
     INSERT INTO audit_log (user_name, host_name, command_type, table_name, query_text, affected_rows)
-    VALUES (USER(), CONNECTION_ID(), 'INSERT', 'customers', 
+    VALUES (USER(), CONNECTION_ID(), 'INSERT', 'customers',
             CONCAT('INSERT INTO customers VALUES (', NEW.customer_id, ', "', NEW.first_name, '", ...)'), 1);
 END //
 
@@ -562,7 +567,7 @@ END //
 DELIMITER ;
 
 -- Query audit log
-SELECT 
+SELECT
     user_name,
     command_type,
     table_name,
@@ -648,7 +653,7 @@ CREATE TRIGGER orders_audit_trigger
     FOR EACH ROW EXECUTE FUNCTION audit_trigger_function();
 
 -- Query audit log
-SELECT 
+SELECT
     user_name,
     table_name,
     action,
@@ -661,7 +666,7 @@ GROUP BY user_name, table_name, action
 ORDER BY operation_count DESC;
 
 -- View specific changes
-SELECT 
+SELECT
     timestamp,
     user_name,
     action,
@@ -741,7 +746,7 @@ SELECT rolname, rolpassword FROM pg_authid WHERE rolname = 'secure_user';
 CREATE DATABASE ecommerce_app;
 
 -- Create dedicated user for application
-CREATE USER 'ecommerce_app'@'app-server.example.com' 
+CREATE USER 'ecommerce_app'@'app-server.example.com'
 IDENTIFIED BY 'SecureAppPassword123!';
 
 -- Grant only necessary privileges
@@ -754,7 +759,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON ecommerce_app.* TO 'ecommerce_app'@'app-
 -- - FILE (file system access)
 
 -- Create read-only user for reporting
-CREATE USER 'reporting_user'@'report-server.example.com' 
+CREATE USER 'reporting_user'@'report-server.example.com'
 IDENTIFIED BY 'ReportingPassword123!';
 
 GRANT SELECT ON ecommerce_app.orders TO 'reporting_user'@'report-server.example.com';
@@ -762,7 +767,7 @@ GRANT SELECT ON ecommerce_app.customers TO 'reporting_user'@'report-server.examp
 GRANT SELECT ON ecommerce_app.products TO 'reporting_user'@'report-server.example.com';
 
 -- Create backup user with minimal privileges
-CREATE USER 'backup_user'@'backup-server.example.com' 
+CREATE USER 'backup_user'@'backup-server.example.com'
 IDENTIFIED BY 'BackupPassword123!';
 
 GRANT SELECT, LOCK TABLES ON ecommerce_app.* TO 'backup_user'@'backup-server.example.com';
@@ -795,24 +800,24 @@ CREATE PROCEDURE authenticate_user(
 BEGIN
     DECLARE v_stored_password VARCHAR(255);
     DECLARE v_user_id INT DEFAULT NULL;
-    
+
     -- Get stored password hash
     SELECT user_id, password_hash INTO v_user_id, v_stored_password
-    FROM users 
+    FROM users
     WHERE username = p_username AND status = 'active';
-    
+
     -- Verify password (use proper hashing function)
     IF v_user_id IS NOT NULL AND v_stored_password = SHA2(CONCAT(p_password, 'salt'), 256) THEN
         SET p_user_id = v_user_id;
         SET p_is_valid = TRUE;
-        
+
         -- Log successful login
         INSERT INTO login_log (user_id, login_time, ip_address, status)
         VALUES (v_user_id, NOW(), CONNECTION_ID(), 'success');
     ELSE
         SET p_user_id = NULL;
         SET p_is_valid = FALSE;
-        
+
         -- Log failed login attempt
         INSERT INTO login_log (username, login_time, ip_address, status)
         VALUES (p_username, NOW(), CONNECTION_ID(), 'failed');
@@ -840,7 +845,7 @@ CREATE TABLE sensitive_data (
 ALTER TABLE customers ENCRYPTION='Y';
 
 -- Check encryption status
-SELECT 
+SELECT
     TABLE_SCHEMA,
     TABLE_NAME,
     CREATE_OPTIONS
@@ -867,7 +872,7 @@ VALUES (
 );
 
 -- Decrypt data
-SELECT 
+SELECT
     id,
     pgp_sym_decrypt(ssn_encrypted, 'encryption_key') AS ssn,
     pgp_sym_decrypt(credit_card_encrypted, 'encryption_key') AS credit_card
@@ -887,9 +892,9 @@ BEGIN
     IF NOT pg_has_role(current_user, 'sensitive_data_access', 'member') THEN
         RAISE EXCEPTION 'Access denied: insufficient privileges';
     END IF;
-    
+
     RETURN QUERY
-    SELECT 
+    SELECT
         sd.id,
         pgp_sym_decrypt(sd.ssn_encrypted, p_encryption_key),
         pgp_sym_decrypt(sd.credit_card_encrypted, p_encryption_key)
@@ -908,19 +913,19 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 ```sql
 -- MySQL: Create masked views for sensitive data
 CREATE VIEW customers_masked AS
-SELECT 
+SELECT
     customer_id,
     first_name,
     last_name,
-    CASE 
+    CASE
         WHEN CURRENT_USER() LIKE '%admin%' THEN email
         ELSE CONCAT(LEFT(email, 2), '***@', SUBSTRING_INDEX(email, '@', -1))
     END AS email,
-    CASE 
+    CASE
         WHEN CURRENT_USER() LIKE '%admin%' THEN phone
         ELSE CONCAT('***-***-', RIGHT(phone, 4))
     END AS phone,
-    CASE 
+    CASE
         WHEN CURRENT_USER() LIKE '%admin%' THEN address
         ELSE 'Address Hidden'
     END AS address,
@@ -941,7 +946,7 @@ BEGIN
         NEW.phone := regexp_replace(NEW.phone, '^(.{3}).*(.{4})$', '\1-***-\2');
         NEW.ssn := '***-**-' || right(NEW.ssn, 4);
     END IF;
-    
+
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
@@ -959,7 +964,7 @@ CREATE TRIGGER mask_customer_data
 ```sql
 -- Create anonymized copy of production data
 CREATE TABLE customers_test AS
-SELECT 
+SELECT
     customer_id,
     CONCAT('TestUser', customer_id) AS first_name,
     CONCAT('TestLast', customer_id) AS last_name,
@@ -972,7 +977,7 @@ FROM customers;
 
 -- PostgreSQL: More sophisticated anonymization
 CREATE TABLE customers_anonymized AS
-SELECT 
+SELECT
     customer_id,
     'Anonymous' || customer_id AS first_name,
     'User' || customer_id AS last_name,
@@ -985,7 +990,7 @@ FROM customers;
 
 -- Anonymize order amounts while preserving patterns
 CREATE TABLE orders_anonymized AS
-SELECT 
+SELECT
     order_id,
     customer_id,
     -- Multiply by random factor to preserve relative amounts
@@ -1035,7 +1040,7 @@ CREATE POLICY nurse_assigned_patients ON patients
     FOR SELECT TO nurse
     USING (
         patient_id IN (
-            SELECT patient_id FROM patient_assignments 
+            SELECT patient_id FROM patient_assignments
             WHERE nurse_id = current_setting('app.current_user_id')::int
         )
     );
@@ -1047,7 +1052,7 @@ CREATE POLICY billing_limited_access ON patients
 
 -- Create secure view for billing
 CREATE VIEW patients_billing AS
-SELECT 
+SELECT
     patient_id,
     medical_record_number,
     'PROTECTED' AS first_name,
@@ -1074,15 +1079,15 @@ BEGIN
         CURRENT_TIMESTAMP,
         inet_client_addr()
     );
-    
+
     -- Update last accessed info
     IF TG_OP = 'SELECT' OR TG_OP = 'UPDATE' THEN
-        UPDATE patients 
+        UPDATE patients
         SET last_accessed = CURRENT_TIMESTAMP,
             last_accessed_by = current_user
         WHERE patient_id = NEW.patient_id;
     END IF;
-    
+
     RETURN COALESCE(NEW, OLD);
 END;
 $$ LANGUAGE plpgsql;
@@ -1132,7 +1137,7 @@ CREATE POLICY teller_account_access ON accounts
     FOR SELECT TO bank_teller
     USING (
         customer_id IN (
-            SELECT customer_id FROM teller_assignments 
+            SELECT customer_id FROM teller_assignments
             WHERE teller_id = current_setting('app.current_user_id')::int
         )
     );
@@ -1142,7 +1147,7 @@ CREATE POLICY manager_account_access ON accounts
     FOR ALL TO account_manager
     USING (
         customer_id IN (
-            SELECT customer_id FROM customer_assignments 
+            SELECT customer_id FROM customer_assignments
             WHERE manager_id = current_setting('app.current_user_id')::int
         )
     );
@@ -1177,16 +1182,16 @@ BEGIN
         RETURN QUERY SELECT FALSE, NULL::INT, 'Unauthorized: Transfer privilege required';
         RETURN;
     END IF;
-    
+
     -- Additional security checks
     IF p_amount > 10000 AND NOT pg_has_role(current_user, 'high_value_transfer', 'member') THEN
         RETURN QUERY SELECT FALSE, NULL::INT, 'Unauthorized: High value transfer requires special authorization';
         RETURN;
     END IF;
-    
+
     -- Proceed with secure transfer logic
     -- (Implementation similar to previous examples but with encryption)
-    
+
     RETURN QUERY SELECT TRUE, v_transaction_id, 'Transfer completed successfully';
 END;
 $$ LANGUAGE plpgsql;
@@ -1202,6 +1207,7 @@ GRANT EXECUTE ON FUNCTION secure_transfer TO bank_teller, account_manager;
 ### Common Interview Questions:
 
 1. **"How do you secure a database?"**
+
    - **Network**: Firewalls, VPNs, SSL/TLS
    - **Authentication**: Strong passwords, MFA, certificates
    - **Authorization**: RBAC, principle of least privilege
@@ -1210,11 +1216,13 @@ GRANT EXECUTE ON FUNCTION secure_transfer TO bank_teller, account_manager;
    - **Monitoring**: Detect suspicious activities
 
 2. **"What's the difference between authentication and authorization?"**
+
    - **Authentication**: Verifying identity ("Who are you?")
    - **Authorization**: Controlling access ("What can you do?")
    - Example: Login (authentication) → Check permissions (authorization)
 
 3. **"How do you prevent SQL injection?"**
+
    - **Parameterized queries**: Use placeholders for user input
    - **Input validation**: Sanitize and validate all inputs
    - **Stored procedures**: Encapsulate database logic
@@ -1243,6 +1251,7 @@ GRANT EXECUTE ON FUNCTION secure_transfer TO bank_teller, account_manager;
 ## ⚠️ Things to Watch Out For
 
 ### 1. **Overprivileged Users**
+
 ```sql
 -- Problem: Giving too many privileges
 GRANT ALL PRIVILEGES ON *.* TO 'app_user'@'%'; -- Too broad!
@@ -1252,6 +1261,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON ecommerce.* TO 'app_user'@'%';
 ```
 
 ### 2. **Weak Password Policies**
+
 ```sql
 -- Problem: Weak passwords
 CREATE USER 'admin'@'%' IDENTIFIED BY '123456';
@@ -1261,6 +1271,7 @@ CREATE USER 'admin'@'%' IDENTIFIED BY 'StrongP@ssw0rd123!';
 ```
 
 ### 3. **Unencrypted Connections**
+
 ```sql
 -- Problem: Allowing unencrypted connections
 -- host all all 0.0.0.0/0 md5
@@ -1270,6 +1281,7 @@ CREATE USER 'admin'@'%' IDENTIFIED BY 'StrongP@ssw0rd123!';
 ```
 
 ### 4. **Missing Audit Trails**
+
 ```sql
 -- Problem: No logging of sensitive operations
 -- Solution: Comprehensive audit logging
@@ -1279,6 +1291,7 @@ CREATE TRIGGER audit_sensitive_table
 ```
 
 ### 5. **Storing Sensitive Data in Plain Text**
+
 ```sql
 -- Problem: Plain text sensitive data
 CREATE TABLE users (
@@ -1316,8 +1329,8 @@ Implementing these security measures protects sensitive data, ensures compliance
 
 ## 🔗 Next Steps
 
-In the next chapter, we'll explore **Backup and Recovery**, covering backup strategies, point-in-time recovery, disaster recovery planning, and high availability configurations.
+In the next chapter, we'll explore **[Backup and Recovery](./17-backup-recovery.md)**, covering backup strategies, point-in-time recovery, disaster recovery planning, and high availability configurations.
 
 ---
 
-*Remember: Security is not a one-time setup—it's an ongoing process that requires constant vigilance and updates.*
+_Remember: Security is not a one-time setup—it's an ongoing process that requires constant vigilance and updates._
