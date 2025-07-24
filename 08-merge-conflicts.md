@@ -5,6 +5,7 @@ Merge conflicts occur when Git cannot automatically merge changes from different
 ## What Causes Merge Conflicts?
 
 Conflicts happen when:
+
 - **Same lines modified**: Two branches change the same lines differently
 - **File deleted vs modified**: One branch deletes a file, another modifies it
 - **Rename conflicts**: File renamed differently in each branch
@@ -15,14 +16,11 @@ Conflicts happen when:
 When Git encounters a conflict, it adds special markers to the file:
 
 ```
-<<<<<<< HEAD (current branch)
-Content from current branch
-=======
 Content from merging branch
->>>>>>> branch-name
 ```
 
 **Markers explained:**
+
 - `<<<<<<< HEAD`: Start of current branch content
 - `=======`: Separator between conflicting content
 - `>>>>>>> branch-name`: End of merging branch content
@@ -138,6 +136,7 @@ git merge feature/redesign-homepage
 ```
 
 Output:
+
 ```
 Auto-merging index.html
 CONFLICT (content): Merge conflict in index.html
@@ -152,6 +151,7 @@ git status
 ```
 
 Output:
+
 ```
 On branch main
 You have unmerged paths.
@@ -171,65 +171,42 @@ cat index.html
 ```
 
 Output:
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
-    <title>John Doe - Senior Web Developer</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact</a>
-        </nav>
-    </header>
-    <main>
-        <h1>Senior Web Developer</h1>
-        <p>I specialize in modern web technologies and have 5+ years of experience.</p>
-        <section id="experience">
-            <h2>Experience</h2>
-            <ul>
-                <li>Senior Developer at TechCorp (2022-Present)</li>
-                <li>Full-Stack Developer at StartupXYZ (2020-2022)</li>
-            </ul>
-        </section>
-    </main>
-    <footer>© 2024 John Doe - All Rights Reserved</footer>
-=======
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>John Doe - Creative Developer</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <header>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="portfolio.html">Portfolio</a>
-            <a href="contact.html">Contact</a>
-        </nav>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="contact.html">Contact</a>
+      </nav>
     </header>
     <main>
-        <section class="hero">
-            <h1>Creative Web Developer</h1>
-            <p>Passionate about creating beautiful and functional web experiences.</p>
-        </section>
-        <section id="skills">
-            <h2>Core Skills</h2>
-            <div class="skills-grid">
-                <div>Frontend Development</div>
-                <div>UI/UX Design</div>
-                <div>JavaScript Frameworks</div>
-            </div>
-        </section>
+      <section class="hero">
+        <h1>Creative Web Developer</h1>
+        <p>
+          Passionate about creating beautiful and functional web experiences.
+        </p>
+      </section>
+      <section id="skills">
+        <h2>Core Skills</h2>
+        <div class="skills-grid">
+          <div>Frontend Development</div>
+          <div>UI/UX Design</div>
+          <div>JavaScript Frameworks</div>
+        </div>
+      </section>
     </main>
     <footer>© 2024 John Doe</footer>
->>>>>>> feature/redesign-homepage
-</body>
+  </body>
 </html>
 ```
 
@@ -238,6 +215,7 @@ Output:
 ### Step 1: Analyze the Conflict
 
 Look at both versions and decide:
+
 - Which parts to keep from each version
 - What new content to create
 - How to combine the best of both
@@ -302,6 +280,7 @@ git status
 ```
 
 Output:
+
 ```
 On branch main
 All conflicts fixed but you are still merging.
@@ -359,6 +338,7 @@ git config --global mergetool.prompt false
 ### VS Code Merge Interface
 
 VS Code provides a visual interface with:
+
 - **Accept Current Change**: Keep HEAD version
 - **Accept Incoming Change**: Keep merging branch version
 - **Accept Both Changes**: Keep both versions
@@ -412,6 +392,7 @@ git merge delete-branch  # Conflict!
 ```
 
 Resolution:
+
 ```bash
 # Decide to keep the file
 git add temp-file.txt
@@ -466,14 +447,9 @@ git config --global merge.conflictstyle diff3
 ```
 
 This shows:
+
 ```
-<<<<<<< HEAD
-Current branch content
-||||||| merged common ancestors
-Original content
-=======
 Merging branch content
->>>>>>> branch-name
 ```
 
 ### Resolving Conflicts in Chunks
