@@ -41,7 +41,7 @@ const moduleNames: Record<string, string> = {
 
 export default function ModulePage({ params }: ModulePageProps) {
   const resolvedParams = use(params);
-  
+
   // Removed HTML tab - only showing Markdown content
   const [content, setContent] = useState<ModuleContent | null>(null);
   const [loading, setLoading] = useState(true);
@@ -55,17 +55,17 @@ export default function ModulePage({ params }: ModulePageProps) {
   };
 
   const getCookie = (name: string): string | null => {
-    return document.cookie.split('; ').reduce((r, v) => {
-      const parts = v.split('=');
+    return document.cookie.split("; ").reduce((r, v) => {
+      const parts = v.split("=");
       return parts[0] === name ? decodeURIComponent(parts[1]) : r;
-    }, '');
+    }, "");
   };
 
   // Load dark mode preference from cookies
   useEffect(() => {
     const savedTheme = getCookie("darkMode");
     if (savedTheme) {
-      setIsDarkMode(savedTheme === 'true');
+      setIsDarkMode(savedTheme === "true");
     }
   }, []);
 
@@ -159,27 +159,29 @@ export default function ModulePage({ params }: ModulePageProps) {
   if (error) {
     return (
       <div
-        className={`min-h-screen flex items-center justify-center transition-colors duration-300 ${
+        className={`min-h-screen flex items-center justify-center transition-colors duration-300 px-4 ${
           isDarkMode ? "bg-gray-900" : "bg-white"
         }`}
       >
-        <div className="text-center max-w-md">
+        <div className="text-center max-w-md w-full">
           <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
           <h2
-            className={`text-xl font-semibold mb-2 ${
+            className={`text-lg sm:text-xl font-semibold mb-2 ${
               isDarkMode ? "text-white" : "text-black"
             }`}
           >
             Error Loading Content
           </h2>
           <p
-            className={`mb-6 ${isDarkMode ? "text-gray-300" : "text-gray-600"}`}
+            className={`mb-6 text-sm sm:text-base ${
+              isDarkMode ? "text-gray-300" : "text-gray-600"
+            }`}
           >
             {error}
           </p>
           <Link
             href="/"
-            className={`inline-flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
+            className={`inline-flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors duration-200 cursor-pointer ${
               isDarkMode
                 ? "bg-white text-black hover:bg-gray-200"
                 : "bg-black text-white hover:bg-gray-800"
@@ -210,27 +212,25 @@ export default function ModulePage({ params }: ModulePageProps) {
             : "bg-white border-gray-200"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
+            {/* Left side - Back button and title */}
+            <div className="flex items-center space-x-2 sm:space-x-4 flex-1 min-w-0">
               <Link
                 href="/"
-                className={`flex items-center space-x-2 transition-colors duration-200 ${
+                className={`flex items-center space-x-1 sm:space-x-2 transition-colors duration-200 cursor-pointer flex-shrink-0 ${
                   isDarkMode
                     ? "text-gray-300 hover:text-white"
                     : "text-gray-600 hover:text-black"
                 }`}
               >
-                <ArrowLeft className="w-5 h-5" />
-                <span className="font-medium">Back to Modules</span>
+                <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span className="font-medium text-xs sm:text-base hidden xs:inline">
+                  Back
+                </span>
               </Link>
-              <span
-                className={`${isDarkMode ? "text-gray-500" : "text-gray-400"}`}
-              >
-                •
-              </span>
               <h1
-                className={`text-xl font-bold ${
+                className={`text-sm sm:text-xl font-bold truncate ${
                   isDarkMode ? "text-white" : "text-black"
                 }`}
               >
@@ -238,11 +238,12 @@ export default function ModulePage({ params }: ModulePageProps) {
               </h1>
             </div>
 
-            <div className="flex items-center space-x-3">
+            {/* Right side - Action buttons */}
+            <div className="flex items-center space-x-2 flex-shrink-0">
               {/* Dark Mode Toggle */}
               <button
                 onClick={() => setIsDarkMode(!isDarkMode)}
-                className={`p-2 rounded-lg transition-colors duration-200 ${
+                className={`p-2 rounded-lg transition-colors duration-200 cursor-pointer ${
                   isDarkMode
                     ? "bg-gray-800 text-yellow-400 hover:bg-gray-700"
                     : "bg-gray-100 text-gray-600 hover:bg-gray-200"
@@ -258,14 +259,15 @@ export default function ModulePage({ params }: ModulePageProps) {
 
               <button
                 onClick={handleDownloadPDF}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
+                className={`flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-2 rounded-lg transition-colors duration-200 cursor-pointer text-xs sm:text-base ${
                   isDarkMode
                     ? "bg-white text-black hover:bg-gray-200"
                     : "bg-black text-white hover:bg-gray-800"
                 }`}
               >
                 <Download className="w-4 h-4" />
-                <span>Download PDF</span>
+                <span className="hidden sm:inline">Download PDF</span>
+                <span className="sm:hidden">PDF</span>
               </button>
             </div>
           </div>
@@ -273,21 +275,21 @@ export default function ModulePage({ params }: ModulePageProps) {
       </motion.header>
 
       {/* Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Content Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex items-center space-x-2 mb-8"
+          className="flex items-center space-x-2 mb-6 sm:mb-8"
         >
           <BookOpen
-            className={`w-5 h-5 ${
+            className={`w-4 h-4 sm:w-5 sm:h-5 ${
               isDarkMode ? "text-gray-300" : "text-gray-600"
             }`}
           />
           <h2
-            className={`text-lg font-semibold ${
+            className={`text-base sm:text-lg font-semibold ${
               isDarkMode ? "text-white" : "text-black"
             }`}
           >
@@ -300,14 +302,14 @@ export default function ModulePage({ params }: ModulePageProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className={`border rounded-xl overflow-hidden transition-colors duration-300 ${
+          className={`border rounded-lg sm:rounded-xl overflow-hidden transition-colors duration-300 ${
             isDarkMode
               ? "bg-gray-800 border-gray-700"
               : "bg-white border-gray-200"
           }`}
         >
-          <div className="p-8">
-            <div className="prose max-w-none">
+          <div className="p-4 sm:p-6 lg:p-8">
+            <div className="prose prose-sm sm:prose max-w-none">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[rehypeRaw]}
@@ -323,15 +325,15 @@ export default function ModulePage({ params }: ModulePageProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-8 flex items-center justify-between"
+          className="mt-6 sm:mt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
         >
           <div
-            className={`flex items-center space-x-4 text-sm ${
+            className={`flex items-center space-x-2 sm:space-x-4 text-xs sm:text-sm ${
               isDarkMode ? "text-gray-400" : "text-gray-500"
             }`}
           >
             <div className="flex items-center space-x-2">
-              <ExternalLink className="w-4 h-4" />
+              <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
               <span>Markdown Documentation</span>
             </div>
           </div>
@@ -341,14 +343,14 @@ export default function ModulePage({ params }: ModulePageProps) {
               href={`https://github.com/iammhador/dev-logs/tree/${branchName}`}
               target="_blank"
               rel="noopener noreferrer"
-              className={`flex items-center space-x-2 transition-colors duration-200 ${
+              className={`flex items-center space-x-2 transition-colors duration-200 cursor-pointer ${
                 isDarkMode
                   ? "text-gray-300 hover:text-white"
                   : "text-gray-600 hover:text-black"
               }`}
             >
-              <ExternalLink className="w-4 h-4" />
-              <span className="text-sm">View on GitHub</span>
+              <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="text-xs sm:text-sm">View on GitHub</span>
             </a>
           </div>
         </motion.div>
