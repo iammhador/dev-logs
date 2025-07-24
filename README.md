@@ -23,28 +23,21 @@ This guide is designed for learners who want to master JavaScript from the groun
 6. [Closures Explained](./06-closures.md)
 7. [Arrays & Array Methods](./07-arrays.md)
 8. [Objects & Object Access](./08-objects.md)
-9. [The 'this' Keyword](./09-this-keyword.md)
-10. [Prototypes & Inheritance](./10-prototypes.md)
-11. [Classes & OOP in JavaScript](./11-classes-oop.md)
-12. [Asynchronous JavaScript](./12-async-javascript.md)
+9. [Prototypes & Inheritance](./09-prototypes.md)
+10. [Asynchronous JavaScript](./10-async-javascript.md)
+11. [Error Handling & Debugging](./11-error-handling.md)
+12. [ES6+ Features](./12-es6-features.md)
 
-### 🔴 Part III: Advanced & Interview Topics
-13. [JavaScript Engine & Compilation](./13-js-engine.md)
-14. [Proxy & Reflect](./14-proxy-reflect.md)
-15. [Generators & Iterators](./15-generators.md)
-16. [Memory Management & Optimization](./16-memory-optimization.md)
-17. [Modules: ESM & CommonJS](./17-modules.md)
-18. [Error Handling & Debugging](./18-error-handling.md)
-19. [Deep Copy & Immutability](./19-immutability.md)
-
-### 💼 Part IV: Professional JavaScript
-20. [Interview Patterns](./20-interview-patterns.md)
-21. [Common Interview Questions](./21-interview-questions.md)
-22. [Writing Maintainable Code](./22-maintainable-code.md)
-23. [JavaScript Quiz](./23-quiz.md)
-
-### 🚀 Part V: Capstone Project
-24. [Smart Task Manager Project](./24-final-project.md)
+### 🔴 Part III: Advanced & Browser Topics
+13. [DOM Manipulation](./13-dom-manipulation.md)
+14. [Event Handling](./14-event-handling.md)
+15. [Browser APIs](./15-browser-apis.md)
+16. [Testing & Debugging](./16-testing-debugging.md)
+17. [Performance Optimization](./17-performance-optimization.md)
+18. [Security Best Practices](./18-security-best-practices.md)
+19. [Modern Frameworks](./19-modern-frameworks.md)
+20. [Node.js Backend Development](./20-nodejs-backend.md)
+21. [JavaScript Threading Model & Web Workers](./21-javascript-threading-workers.md)
 
 ## 🎓 How to Use This Guide
 
