@@ -195,7 +195,8 @@ Congratulations! You've successfully completed **8 comprehensive learning tracks
    ```bash
    git checkout js
    ```
-````
+
+```
 
 3. Browse the markdown files chapter by chapter
 4. Try the code examples and complete exercises
@@ -341,17 +342,19 @@ Thanks to these amazing people who have contributed to this project:
 ---
 
 <div align="center">
-  
+
   ### 🌟 Star History
-  
+
   [![Star History Chart](https://api.star-history.com/svg?repos=yourusername/branch-out-learning&type=Date)](https://star-history.com/#yourusername/branch-out-learning&Date)
-  
+
   ---
-  
+
   **"Knowledge grows like a tree — each branch makes you stronger."** 🌱
-  
+
   Made with ❤️ by the open source community
-  
+
   [⬆️ Back to Top](#-branch-out-learning)
-  
+
 </div>
+```
+````
